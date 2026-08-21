@@ -1,0 +1,25 @@
+Test,Case,MaxThetaDeg,Pass,FailReason
+nominal,baseline,3627.57257312457,0,theta exceeded trip angle (3627.57 > 25.00 deg); x exceeded safe travel (281.109 > 0.350 m); theta never settled within Tfinal
+disturbance_force,0.50N,1.58986404013788,1,
+disturbance_force,1.33N,10.5665607938656,1,
+disturbance_force,2.17N,27.6449897004292,0,theta exceeded trip angle (27.64 > 25.00 deg)
+disturbance_force,3.00N,2987.26267107983,0,theta exceeded trip angle (2987.26 > 25.00 deg); x exceeded safe travel (78.181 > 0.350 m); theta never settled within Tfinal
+disturbance_angle,5deg,3366.72346162532,0,theta exceeded trip angle (3366.72 > 25.00 deg); x exceeded safe travel (283.599 > 0.350 m); theta never settled within Tfinal
+disturbance_angle,10deg,5112.90643277019,0,theta exceeded trip angle (5112.91 > 25.00 deg); x exceeded safe travel (306.317 > 0.350 m); theta never settled within Tfinal
+disturbance_angle,15deg,5554.57209559139,0,theta exceeded trip angle (5554.57 > 25.00 deg); x exceeded safe travel (292.922 > 0.350 m); theta never settled within Tfinal
+disturbance_angle,20deg,4333.594813428,0,theta exceeded trip angle (4333.59 > 25.00 deg); x exceeded safe travel (309.888 > 0.350 m); theta never settled within Tfinal
+mass_variation,-30%,6436.100948874,0,theta exceeded trip angle (6436.10 > 25.00 deg); x exceeded safe travel (417.635 > 0.350 m); theta never settled within Tfinal
+mass_variation,-15%,5660.06021651392,0,theta exceeded trip angle (5660.06 > 25.00 deg); x exceeded safe travel (354.195 > 0.350 m); theta never settled within Tfinal
+mass_variation,+0%,5112.90643277019,0,theta exceeded trip angle (5112.91 > 25.00 deg); x exceeded safe travel (306.317 > 0.350 m); theta never settled within Tfinal
+mass_variation,+15%,4332.69748137996,0,theta exceeded trip angle (4332.70 > 25.00 deg); x exceeded safe travel (274.280 > 0.350 m); theta never settled within Tfinal
+mass_variation,+30%,4236.85032932379,0,theta exceeded trip angle (4236.85 > 25.00 deg); x exceeded safe travel (239.459 > 0.350 m); theta never settled within Tfinal
+friction_variation,-100%,5476.18628792831,0,theta exceeded trip angle (5476.19 > 25.00 deg); x exceeded safe travel (370.451 > 0.350 m); theta never settled within Tfinal
+friction_variation,+0%,5112.90643277019,0,theta exceeded trip angle (5112.91 > 25.00 deg); x exceeded safe travel (306.317 > 0.350 m); theta never settled within Tfinal
+friction_variation,+100%,4729.70811511135,0,theta exceeded trip angle (4729.71 > 25.00 deg); x exceeded safe travel (257.862 > 0.350 m); theta never settled within Tfinal
+friction_variation,+200%,4351.39222302749,0,theta exceeded trip angle (4351.39 > 25.00 deg); x exceeded safe travel (219.828 > 0.350 m); theta never settled within Tfinal
+friction_variation,+300%,4104.20886111461,0,theta exceeded trip angle (4104.21 > 25.00 deg); x exceeded safe travel (190.350 > 0.350 m); theta never settled within Tfinal
+length_variation,-15%,4364.03613291421,0,theta exceeded trip angle (4364.04 > 25.00 deg); x exceeded safe travel (328.206 > 0.350 m); theta never settled within Tfinal
+length_variation,-10%,5176.4187102838,0,theta exceeded trip angle (5176.42 > 25.00 deg); x exceeded safe travel (314.710 > 0.350 m); theta never settled within Tfinal
+length_variation,+0%,5112.90643277019,0,theta exceeded trip angle (5112.91 > 25.00 deg); x exceeded safe travel (306.317 > 0.350 m); theta never settled within Tfinal
+length_variation,+10%,4807.97231646156,0,theta exceeded trip angle (4807.97 > 25.00 deg); x exceeded safe travel (304.152 > 0.350 m); theta never settled within Tfinal
+length_variation,+15%,4548.66148202783,0,theta exceeded trip angle (4548.66 > 25.00 deg); x exceeded safe travel (304.659 > 0.350 m); theta never settled within Tfinal

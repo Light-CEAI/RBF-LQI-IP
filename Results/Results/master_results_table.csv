@@ -1,0 +1,12 @@
+Category,Metric,Value,Target,Status
+Objective,Avg settling time improvement,-8.8%,>=15%,FAIL
+Objective,Avg IAE improvement (disturbance),-0.5%,>=20%,FAIL
+Objective,Stable under +-20%% uncertainty,1,sustained,PASS
+Monte Carlo,nominal_10deg: settling diff (N=30),-0.002 +/- 0.001s,CI excludes 0,SIGNIFICANT
+Monte Carlo,nominal_10deg: IAE diff (N=30),-0.0000 +/- 0.0000,CI excludes 0,SIGNIFICANT
+Monte Carlo,large_angle_18deg: settling diff (N=30),-0.009 +/- 0.001s,CI excludes 0,SIGNIFICANT
+Monte Carlo,large_angle_18deg: IAE diff (N=30),-0.0005 +/- 0.0001,CI excludes 0,SIGNIFICANT
+Monte Carlo,disturbance_2N: settling diff (N=30),-0.019 +/- 0.001s,CI excludes 0,SIGNIFICANT
+Monte Carlo,disturbance_2N: IAE diff (N=30),-0.0031 +/- 0.0001,CI excludes 0,SIGNIFICANT
+Timing,Mean control_step.m execution (MATLAB),24.32 us,<10000 us (Ts budget),WITHIN BUDGET (interpreted)
+Robustness,Test cases passing,23/24,documented boundary acceptable,1 failures (see results_summary.csv)
