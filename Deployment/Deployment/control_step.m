@@ -34,10 +34,7 @@ else
 end
 xi_next = xi_prev + xi_dot * c.Ts;
 
-tracking_err = r - xhat_next(1);
-innovation_err = innovation(2);
-alpha = single(rbf.alpha_innovation);
-rbf_error = (single(1)-alpha)*tracking_err + alpha*innovation_err;
+rbf_error = r - xhat_next(1);
 rbf_next = rbf_update(rbf, phi, rbf_error);
 
 diag.saturated   = saturated_high || saturated_low;
