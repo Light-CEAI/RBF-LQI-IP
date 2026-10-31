@@ -56,7 +56,9 @@ paramsTrue.pend.L  = paramsNominal.pend.L  * (1 + scenario.lengthPct);
 [L, C_meas]       = observer_design(Ad, paramsNominal, scenario.observerMethod);
 
 if scenario.useRBF
-    rbf = rbf_initialize(paramsNominal);
+    projectRoot = fileparts(fileparts(mfilename('fullpath')));
+    rbfMatFile = fullfile(projectRoot, 'RBF', 'RBF', 'rbf_centers.mat');
+    rbf = rbf_initialize(paramsNominal, 'host', rbfMatFile);
 end
 
 actuator_limit = local_actuator_limit(paramsNominal);
@@ -122,15 +124,19 @@ for kk = 1:N
     x_true(:,kk+1) = xx(end,:)';
 
     % --- Observer update (uses nominal discretized model) ---
-    xhat(:,kk+1) = observer_update(xhat(:,kk), u, y, Ad, Bd, L, C_meas, paramsNominal);
+    [xhat(:,kk+1), innovation] = observer_update( ...
+        xhat(:,kk), u, y, Ad, Bd, L, C_meas, paramsNominal);
 
     % --- Integral state update (simple forward Euler) ---
     xi_log(kk+1) = xi_log(kk) + xi_dot * scenario.Ts;
 
     % --- RBF online update ---
     if scenario.useRBF
-        error_signal = scenario.r - xhat(1,kk+1);
-        rbf = rbf_update(rbf, phi, error_signal);
+        tracking_err = scenario.r - xhat(1,kk+1);
+        innovation_err = innovation(2); % measured-minus-predicted theta innovation
+        alpha = rbf.alpha_innovation;
+        rbf_error = (1-alpha)*tracking_err + alpha*innovation_err;
+        rbf = rbf_update(rbf, phi, rbf_error);
         rbf_weights(:,kk+1) = rbf.weights;
     end
 
