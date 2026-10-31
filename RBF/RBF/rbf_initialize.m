@@ -43,6 +43,13 @@ rbf.lr       = params.rbf.learning_rate;
 rbf.wbounds  = params.rbf.weight_bounds;
 rbf.leak     = params.rbf.leakage;
 
+if strcmp(mode, 'embedded')
+    rbf.sigma   = single(rbf.sigma);
+    rbf.lr      = single(rbf.lr);
+    rbf.wbounds = single(rbf.wbounds);
+    rbf.leak    = single(rbf.leak);
+end
+
 end
 
 % ------------------------------------------------------------------------
