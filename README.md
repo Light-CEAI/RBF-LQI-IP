@@ -102,10 +102,14 @@ after offline training and regenerate controller constants after the LQI /
 observer design has been confirmed:
 
 ```matlab
-cd ../RBF
-rbf_export_for_embedded('rbf_centers.mat', 'rbf_centers_const.m');
-cd ../Deployment
-% Generate control_consts.m using the current design_lqi and observer gains.
+rbf_export_for_embedded( ...
+    fullfile('RBF','RBF','rbf_centers.mat'), ...
+    fullfile('RBF','RBF','rbf_centers_const.m'));
+[A,B,C,D] = linearized_model(params);
+[Ad,Bd,~,~] = discretize_model(A,B,C,D,params.embedded.Ts);
+[K,Ki] = design_lqi(A,B,params);
+[L,C_meas] = observer_design(Ad,params,'kalman');
+generate_control_consts(K,Ki,Ad,Bd,L,C_meas,params,'control_consts.m');
 ```
 
 The online RBF update uses the cart-position tracking error consistently in
