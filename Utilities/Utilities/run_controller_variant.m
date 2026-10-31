@@ -28,7 +28,6 @@ rbf = rbf_initialize(params, 'host', rbfMatFile);
 
 actuator_limit = params.cart.tau_max; sat_tol = 1e-9;
 DIVERGE_THRESHOLD = deg2rad(90);
-alpha = rbf.alpha_innovation;
 
 x_true = zeros(4,N+1); xhat = zeros(4,N+1);
 x_true(:,1) = scenario.x0; xhat(:,1) = scenario.x0;
@@ -87,9 +86,7 @@ for kk = 1:N
     xi_log(kk+1) = xi_log(kk) + xi_dot*Ts;
 
     if useRBF
-        tracking_err  = scenario.r - xhat(1,kk+1);
-        innovation_err = innovation(2);  % theta channel: C_meas row 2 = theta
-        rbf_error = (1-alpha)*tracking_err + alpha*innovation_err;
+        rbf_error = scenario.r - xhat(1,kk+1);
         rbf = rbf_update(rbf, phi, rbf_error);
         rbf_weights(:,kk+1) = rbf.weights;
     end
