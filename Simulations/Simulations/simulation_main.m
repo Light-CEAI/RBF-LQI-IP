@@ -93,16 +93,16 @@ for kk = 1:N
     y = C_meas * x_true(:,kk) + scenario.measNoiseStd .* randn(2,1);
 
     % --- Observer correction: current measurement + previous applied input ---
-    [xhat(:,kk), innovation] = observer_update( ...
+    [xhat(:,kk+1), innovation] = observer_update( ...
         xhat(:,kk), u_prev, y, Ad, Bd, L, C_meas, paramsNominal);
 
     % --- Raw (unsaturated) LQI command ---
-    err = scenario.r - xhat(1,kk);
-    u_lqi = lqi_controller(xhat(:,kk), xi_log(kk), scenario.r, K, Ki);
+    err = scenario.r - xhat(1,kk+1);
+    u_lqi = lqi_controller(xhat(:,kk+1), xi_log(kk), scenario.r, K, Ki);
 
     % --- RBF compensation (additive, on top of LQI) ---
     if scenario.useRBF
-        rbfInput = [xhat(3,kk); xhat(4,kk); xhat(1,kk); xhat(2,kk)]; % theta,thetadot,x,xdot
+        rbfInput = [xhat(3,kk+1); xhat(4,kk+1); xhat(1,kk+1); xhat(2,kk+1)]; % theta,thetadot,x,xdot
         [f_rbf, phi] = rbf_forward(rbf, rbfInput);
     else
         f_rbf = 0;
@@ -133,7 +133,7 @@ for kk = 1:N
 
     % --- RBF online update: same cart-position error in all code paths ---
     if scenario.useRBF
-        rbf_error = scenario.r - xhat(1,kk);
+        rbf_error = scenario.r - xhat(1,kk+1);
         rbf = rbf_update(rbf, phi, rbf_error);
         rbf_weights(:,kk+1) = rbf.weights;
     end
