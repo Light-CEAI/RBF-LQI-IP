@@ -42,7 +42,6 @@ rbf.n_inputs = params.rbf.n_inputs;
 rbf.lr       = params.rbf.learning_rate;
 rbf.wbounds  = params.rbf.weight_bounds;
 rbf.leak     = params.rbf.leakage;
-rbf.alpha_innovation = params.rbf.alpha_innovation;
 
 end
 
