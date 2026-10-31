@@ -34,6 +34,7 @@ x_true(:,1) = scenario.x0; xhat(:,1) = scenario.x0;
 u_log = nan(1,N); xi_log = zeros(1,N+1);
 rbf_weights = zeros(rbf.n_hidden, N+1); rbf_weights(:,1) = rbf.weights;
 M_true_log = nan(1,N+1);
+u_prev = 0;
 
 useLQI = ismember(mode, {'lqi_only','lqi_rbf'});
 useRBF = ismember(mode, {'rbf_only','lqi_rbf'});
@@ -49,16 +50,17 @@ for kk = 1:N
     M_true_log(kk) = paramsTrue.cart.M;
 
     y = C_meas*x_true(:,kk) + scenario.measNoiseStd.*randn(2,1);
-    err = scenario.r - xhat(1,kk);
+    xhat(:,kk+1) = observer_update(xhat(:,kk), u_prev, y, Ad, Bd, L, C_meas, params);
+    err = scenario.r - xhat(1,kk+1);
 
     if useLQI
-        u_lqi = -K*xhat(:,kk) - Ki*xi_log(kk);
+        u_lqi = -K*xhat(:,kk+1) - Ki*xi_log(kk);
     else
         u_lqi = 0;
     end
 
     if useRBF
-        rbfInput = [xhat(3,kk); xhat(4,kk); xhat(1,kk); xhat(2,kk)];
+        rbfInput = [xhat(3,kk+1); xhat(4,kk+1); xhat(1,kk+1); xhat(2,kk+1)];
         [f_rbf, phi] = rbf_forward(rbf, rbfInput);
     else
         f_rbf = 0;
@@ -80,9 +82,6 @@ for kk = 1:N
         [tk, tk+Ts], x_true(:,kk));
     x_true(:,kk+1) = xx(end,:)';
 
-    % Observer update — now returns innovation for RBF error signal
-    [xhat(:,kk+1), innovation] = observer_update(xhat(:,kk), u, y, Ad, Bd, L, C_meas, params);
-
     xi_log(kk+1) = xi_log(kk) + xi_dot*Ts;
 
     if useRBF
@@ -90,6 +89,7 @@ for kk = 1:N
         rbf = rbf_update(rbf, phi, rbf_error);
         rbf_weights(:,kk+1) = rbf.weights;
     end
+    u_prev = u;
     u_log(kk) = u;
 
     if abs(x_true(3,kk+1)) > DIVERGE_THRESHOLD
