@@ -39,10 +39,8 @@ if rbf.n_hidden ~= params.rbf.n_hidden
         rbf.n_hidden, params.rbf.n_hidden);
 end
 
-ranges = [params.rbf.theta_range;
-    params.rbf.thetadot_range;
-    params.rbf.x_range;
-    params.rbf.xdot_range];
+% Train over the same local operating envelope covered by the centre grid.
+ranges = [min(rbf.centers, [], 1)', max(rbf.centers, [], 1)'];
 
 rng(1);
 X = zeros(nSamples, 4);
