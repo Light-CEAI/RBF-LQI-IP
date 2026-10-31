@@ -6,7 +6,9 @@ function [f_rbf, phi] = rbf_forward(rbf, inputVec)
 %   rbf      : struct from rbf_initialize.m (or rbf_update.m)
 %   inputVec : (4x1) or (1x4) = [theta; theta_dot; x; x_dot]
 %
-%   f_rbf : scalar compensation term, added to the LQI command:
+%   f_rbf : scalar actuator-command compensation, added to the LQI command.
+%           Units are N*m for Config A or N for Config B; training converts
+%           angular-acceleration residuals through the local plant input gain.
 %               u = u_lqi + f_rbf
 %           (wire this in at the Simulations level, not inside
 %           lqi_controller.m, to keep the linear controller and the
