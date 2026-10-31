@@ -10,6 +10,8 @@ if nargin < 2 || isempty(mode), mode = 'host'; end
 switch mode
     case 'embedded'
         [centers, weights] = rbf_centers_const();  %#ok — generated, no load()
+        centers = double(centers);
+        weights = double(weights);
 
     case 'host'
         if nargin < 3 || isempty(centersMatFile)
