@@ -27,7 +27,7 @@ rbf = rbf_initialize(params, 'host', rbfMatFile);
 
 actuator_limit = params.cart.tau_max; sat_tol = 1e-9;
 DIVERGE_THRESHOLD = deg2rad(90);
-alpha = params.rbf.alpha_innovation;
+alpha = rbf.alpha_innovation;
 
 x_true = zeros(4,N+1); xhat = zeros(4,N+1);
 x_true(:,1) = scenario.x0; xhat(:,1) = scenario.x0;
