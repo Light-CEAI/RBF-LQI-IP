@@ -78,6 +78,7 @@ xi_log = zeros(1, N+1);
 x_true(:,1) = scenario.x0;
 xhat(:,1)   = scenario.x0;
 xi_log(1)   = 0;
+u_prev = 0; % observer prediction uses the input applied over the previous interval
 
 if scenario.useRBF
     rbf_weights = zeros(rbf.n_hidden, N+1);
@@ -90,6 +91,10 @@ for kk = 1:N
 
     % --- Measurement from the TRUE plant ---
     y = C_meas * x_true(:,kk) + scenario.measNoiseStd .* randn(2,1);
+
+    % --- Observer correction: current measurement + previous applied input ---
+    [xhat(:,kk), innovation] = observer_update( ...
+        xhat(:,kk), u_prev, y, Ad, Bd, L, C_meas, paramsNominal);
 
     % --- Raw (unsaturated) LQI command ---
     err = scenario.r - xhat(1,kk);
@@ -123,23 +128,17 @@ for kk = 1:N
                      [tk, tk+scenario.Ts], x_true(:,kk));
     x_true(:,kk+1) = xx(end,:)';
 
-    % --- Observer update (uses nominal discretized model) ---
-    [xhat(:,kk+1), innovation] = observer_update( ...
-        xhat(:,kk), u, y, Ad, Bd, L, C_meas, paramsNominal);
-
     % --- Integral state update (simple forward Euler) ---
     xi_log(kk+1) = xi_log(kk) + xi_dot * scenario.Ts;
 
-    % --- RBF online update ---
+    % --- RBF online update: same cart-position error in all code paths ---
     if scenario.useRBF
-        tracking_err = scenario.r - xhat(1,kk+1);
-        innovation_err = innovation(2); % measured-minus-predicted theta innovation
-        alpha = rbf.alpha_innovation;
-        rbf_error = (1-alpha)*tracking_err + alpha*innovation_err;
+        rbf_error = scenario.r - xhat(1,kk);
         rbf = rbf_update(rbf, phi, rbf_error);
         rbf_weights(:,kk+1) = rbf.weights;
     end
 
+    u_prev = u;
     u_log(kk)     = u;
     u_lqi_log(kk) = u_lqi;
     f_rbf_log(kk) = f_rbf;
