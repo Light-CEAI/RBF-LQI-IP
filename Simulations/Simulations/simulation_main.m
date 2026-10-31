@@ -56,7 +56,7 @@ paramsTrue.pend.L  = paramsNominal.pend.L  * (1 + scenario.lengthPct);
 [L, C_meas]       = observer_design(Ad, paramsNominal, scenario.observerMethod);
 
 if scenario.useRBF
-    projectRoot = fileparts(fileparts(mfilename('fullpath')));
+    projectRoot = fileparts(fileparts(fileparts(mfilename('fullpath'))));
     rbfMatFile = fullfile(projectRoot, 'RBF', 'RBF', 'rbf_centers.mat');
     rbf = rbf_initialize(paramsNominal, 'host', rbfMatFile);
 end
