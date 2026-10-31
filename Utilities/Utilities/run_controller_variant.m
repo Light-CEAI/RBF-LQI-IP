@@ -22,7 +22,8 @@ end
 [K, Ki] = design_lqi(A, B, params);
 [L, C_meas] = observer_design(Ad, params, 'kalman');
 
-rbfMatFile = fullfile(fileparts(fileparts(mfilename('fullpath'))), 'RBF', 'rbf_centers.mat');
+projectRoot = fileparts(fileparts(fileparts(mfilename('fullpath'))));
+rbfMatFile = fullfile(projectRoot, 'RBF', 'RBF', 'rbf_centers.mat');
 rbf = rbf_initialize(params, 'host', rbfMatFile);
 
 actuator_limit = params.cart.tau_max; sat_tol = 1e-9;
