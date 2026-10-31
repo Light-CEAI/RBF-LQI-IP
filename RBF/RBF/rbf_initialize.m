@@ -13,7 +13,7 @@ switch mode
 
     case 'host'
         if nargin < 3 || isempty(centersMatFile)
-            centersMatFile = 'rbf_centers.mat';
+            centersMatFile = fullfile(fileparts(mfilename('fullpath')), 'rbf_centers.mat');
         end
         if exist(centersMatFile, 'file')
             loaded = load(centersMatFile);
@@ -40,6 +40,7 @@ rbf.n_inputs = params.rbf.n_inputs;
 rbf.lr       = params.rbf.learning_rate;
 rbf.wbounds  = params.rbf.weight_bounds;
 rbf.leak     = params.rbf.leakage;
+rbf.alpha_innovation = params.rbf.alpha_innovation;
 
 end
 
