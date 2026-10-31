@@ -5,6 +5,8 @@ function rbf = rbf_train_offline(params, nSamples)
 %   network output has the same units as the plant input: N*m for Config A
 %   (motor torque) or N for Config B (direct force).
 %
+%   Centres retain the 3 x 2 x 5 x 2 (60-unit) grid, with velocity
+%   locations moved closer to the normal operating region.
 %   The training target uses the same viscous-friction model as the nominal
 %   plant. No extra Coulomb friction is injected into this Seminar I model.
 %
@@ -18,6 +20,24 @@ if nargin < 2 || isempty(nSamples),   nSamples   = 3000; end
 [A, B] = linearized_model(params);
 rbf = rbf_initialize(params);
 rbf.weights = zeros(rbf.n_hidden, 1);
+
+% Build a balanced 60-centre grid with better coverage near zero velocity.
+% Keep the original 3 x 2 x 5 x 2 architecture and the existing widths.
+theta_centres = linspace(params.rbf.theta_range(1), ...
+    params.rbf.theta_range(2), 3);
+thetadot_centres = [-1, 1];       % [rad/s], closer to normal operation
+x_centres = linspace(-0.2, 0.2, 5); % [m], local cart operating region
+xdot_centres = [-0.5, 0.5];       % [m/s], closer to normal operation
+
+[TH, THD, XX, XD] = ndgrid(theta_centres, thetadot_centres, ...
+    x_centres, xdot_centres);
+rbf.centers = [TH(:), THD(:), XX(:), XD(:)];
+rbf.n_hidden = size(rbf.centers, 1);
+if rbf.n_hidden ~= params.rbf.n_hidden
+    error('rbf_train_offline:centerCount', ...
+        'Generated %d centres, but params.rbf.n_hidden is %d.', ...
+        rbf.n_hidden, params.rbf.n_hidden);
+end
 
 ranges = [params.rbf.theta_range;
     params.rbf.thetadot_range;
