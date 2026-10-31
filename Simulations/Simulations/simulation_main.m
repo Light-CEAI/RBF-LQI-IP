@@ -93,7 +93,7 @@ for kk = 1:N
     y = C_meas * x_true(:,kk) + scenario.measNoiseStd .* randn(2,1);
 
     % --- Observer correction: current measurement + previous applied input ---
-    [xhat(:,kk+1), innovation] = observer_update( ...
+    xhat(:,kk+1) = observer_update( ...
         xhat(:,kk), u_prev, y, Ad, Bd, L, C_meas, paramsNominal);
 
     % --- Raw (unsaturated) LQI command ---
