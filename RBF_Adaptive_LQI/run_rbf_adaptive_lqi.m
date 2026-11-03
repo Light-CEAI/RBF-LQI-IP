@@ -93,10 +93,13 @@ for k=1:N
         try
             [Kc,Kic]=design_lqi(Ahat,Bhat,Cint,Qaug,R);
             AaugHat=[Ahat zeros(4,1);-Cint 0]; BaugHat=[Bhat;0];
+            Kblend=(1-gainBlend)*K+gainBlend*Kc;
+            Kiblend=(1-gainBlend)*Ki+gainBlend*Kic;
             if all(isfinite(Kc)) && isfinite(Kic) && ...
-                    all(real(eig(AaugHat-BaugHat*[Kc Kic]))<0)
-                K=(1-gainBlend)*K+gainBlend*Kc;
-                Ki=(1-gainBlend)*Ki+gainBlend*Kic;
+                    all(real(eig(AaugHat-BaugHat*[Kc Kic]))<0) && ...
+                    all(real(eig(AaugHat-BaugHat*[Kblend Kiblend]))<0)
+                K=Kblend;
+                Ki=Kiblend;
             end
         catch
             % Retain the last accepted gain if local LQI design fails.
