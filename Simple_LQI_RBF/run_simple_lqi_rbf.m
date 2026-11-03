@@ -129,7 +129,7 @@ end
 function [A,B] = simple_linear_model(p)
 Den = (p.M+p.m)*p.I-(p.m*p.l)^2;
 A = zeros(4);
-A(1,2)=1; A(2,3)=p.m^2*p.g*p.l^2/Den;
+A(1,2)=1; A(2,3)=-p.m^2*p.g*p.l^2/Den;
 A(3,4)=1; A(4,3)=(p.M+p.m)*p.m*p.g*p.l/Den;
 B = [0; p.I/Den; 0; -p.m*p.l/Den];
 end
