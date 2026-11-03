@@ -54,7 +54,7 @@ for k = 1:nTrain
     dxNL = simple_ip_plant(0,state,0,p);
     dxLIN = A*state;
     residualAcc = [dxNL(2)-dxLIN(2); dxNL(4)-dxLIN(4)];
-    targetForce(k) = (bacc'*residualAcc)/(bacc'*bacc);
+    targetForce(k) = -(bacc'*residualAcc)/(bacc'*bacc);
     Phi(k,:) = rbf_basis(z,centres,sigma)';
 end
 lambda = 1e-5;
