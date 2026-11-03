@@ -128,7 +128,7 @@ function dx=nonlinear_ip_plant(~,s,u,p)
 xdot=s(2); theta=s(3); thetadot=s(4);
 MM=[p.M+p.m,p.m*p.l*cos(theta);p.m*p.l*cos(theta),p.I];
 rhs=[u+p.m*p.l*sin(theta)*thetadot^2;p.m*p.g*p.l*sin(theta)];
-acc=MM\\rhs; dx=[xdot;acc(1);thetadot;acc(2)];
+acc=MM\rhs; dx=[xdot;acc(1);thetadot;acc(2)];
 end
 
 function phi=rbf_basis(z,centres,sigma)
