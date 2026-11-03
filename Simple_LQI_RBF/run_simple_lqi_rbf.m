@@ -63,7 +63,7 @@ fprintf('RBF training force-residual RMSE: %.5f N\n', ...
     sqrt(mean((Phi*w-targetForce).^2)));
 
 %% Compare LQI-only and LQI+RBF for nominal and large initial angles
-angles = [0 20 25 30];
+angles = [20 23 24 25 26 27 28 29 30];
 Ts = 0.01;
 Tend = 8;
 results = struct([]);
