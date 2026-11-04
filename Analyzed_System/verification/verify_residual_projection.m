@@ -75,7 +75,6 @@ for k = 1:max(nState,nParam)
     Bp = [0; p.I/D; 0; -p.m*p.l*cos(theta)/D];
     Gp = [0,0; p.I/D,-p.m*p.l*cos(theta)/D; ...
           0,0; -p.m*p.l*cos(theta)/D,(p.M+p.m)/D];
-    fp = [xdot; -(H\hv)(1); thetadot; -(H\hv)(2)]; %#ok<NBRAK>
     % Use an explicit solve for compatibility with MATLAB releases.
     accDrift = -(H\hv);
     fp = [xdot;accDrift(1);thetadot;accDrift(2)];
