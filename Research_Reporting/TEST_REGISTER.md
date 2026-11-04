@@ -44,3 +44,12 @@ Revise the diagnostic to report the translational generalized-force residual in 
 6. A numerical identity/Jacobian check supports only the implemented equation and tested domain; it does not establish physical validity or closed-loop stability.
 7. Simulation results do not replace analytical stability proofs.
 8. Do not mark a test passed unless its declared acceptance checks have actually been executed and their evidence recorded.
+
+
+## V-002 closure — 2026-11-04
+
+The corrected componentwise MATLAB script was executed by the user. Both Euler–Lagrange identity checks passed: cart equation error (4.032590\times10^{-13}\) N against (2.0\times10^{-7}\) N tolerance; pendulum equation error (4.527628\times10^{-14}\) N·m against (2.0\times10^{-7}\) N·m tolerance. The pivot inertia margin was (0.004\) kg·m² (positive), and both constant-parameter rate contributions were exactly zero. MATLAB reported all five pass flags as true.
+
+The generalized-force mismatch was (-0.2831167\) N and (-0.06485389\) N·m. These are explicitly diagnostic only and do not enter the identity-test pass/fail decision.
+
+**Status: PASSED and closed for the stated illustrative smooth attached-body model and test domain.** This does not validate open-system mass flow, abrupt payload events, hardware parameters, actuator dynamics, or closed-loop stability. See the detailed user-supplied output in [RESULTS_LOG.md](RESULTS_LOG.md).
