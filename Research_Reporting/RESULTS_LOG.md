@@ -87,3 +87,25 @@ Add a dated entry for each executed test. Preserve failed tests and unexpected r
 ## Failed / inconclusive tests
 
 _None recorded yet._
+
+
+### V-002 — Corrected componentwise rerun (accepted)
+
+- **Execution date/time:** Reported by user on 2026-11-04; exact execution time and MATLAB release not supplied.
+- **Research branch and commit:** `analyzed-system`; corrected diagnostic script commit `094fbe091156520169b36e83e909447d9c7e416b`.
+- **Script and version:** `Analyzed_System/verification/verify_time_varying_lagrange_model.m`; corrected componentwise diagnostics.
+- **MATLAB release/environment:** Not supplied.
+- **Parameter-set ID and source:** Illustrative smooth attached-body parameter set embedded in the script; not hardware-derived.
+- **Purpose / hypothesis:** Verify the Euler–Lagrange identity componentwise, the pivot-inertia condition, and the constant-parameter limit without combining quantities of unlike units.
+- **Actual output (user-supplied):**
+  - Cart equation identity error: (4.032590\times10^{-13}\) N; tolerance (2.0\times10^{-7}\) N — PASS.
+  - Pendulum equation identity error: (4.527628\times10^{-14}\) N·m; tolerance (2.0\times10^{-7}\) N·m — PASS.
+  - Generalized-force mismatch: (-2.831167\times10^{-1}\) N and (-6.485389\times10^{-2}\) N·m — diagnostic only, not an identity-test failure.
+  - Parameter-rate contribution: (4.087503\times10^{-4}\) N and (6.800509\times10^{-6}\) N·m.
+  - Constant-parameter rate terms: 0 N and 0 N·m — PASS.
+  - Pivot inertia margin (I-ml^2=0.004\) kg·m² — PASS.
+  - MATLAB returned `passedIdentityX=1`, `passedIdentityTheta=1`, `passedEquationIdentity=1`, `passedPhysicalInertia=1`, and `passedConstantParameterLimit=1`.
+- **Pass/fail/inconclusive:** **PASS**, for the implemented identities and checks on the illustrative smooth trajectory.
+- **Interpretation:** The explicit time-varying equations agree with the independently evaluated Euler–Lagrange expressions to substantially tighter precision than the componentwise tolerances. The physical pivot-inertia margin is positive, and parameter-rate contributions vanish in the constant-parameter limit. The nonzero generalized-force mismatch is expected to be reported separately because the selected trajectory/input is not required to satisfy the forced equations of motion; it does not invalidate the identity check.
+- **Limitations:** This is an equation-consistency verification for an illustrative prescribed smooth attached-body trajectory. It does not validate open-system mass flow, abrupt payload events/impact resets, hardware parameters, actuator dynamics, or closed-loop stability.
+- **Follow-up action:** V-002 is closed for its stated scope. Continue with parameter provenance and the rigorous actual-versus-nominal residual and matched/unmatched projection derivation.
