@@ -71,20 +71,18 @@ Add a dated entry for each executed test. Preserve failed tests and unexpected r
 - **Parameter-set ID and source:** Illustrative smooth attached-body parameter set embedded in the script; not a hardware-derived or identified set.
 - **Purpose / hypothesis:** Independently evaluate the Euler–Lagrange expression along a prescribed smooth trajectory and compare it with the explicit time-varying equations; check the pivot inertia condition and constant-parameter limit.
 - **Test conditions:** Prescribed smooth attached-body parameter/trajectory variation. This is not a mass-flow/open-system model and does not include abrupt payload impact.
-- **Actual output (as reported by user):**
-  - Euler–Lagrange / explicit-equation error = 4.033e-13
-  - Force-balance residual at selected input = 2.831e-01
-  - Norm of parameter-rate terms = 0.00040875
-  - Constant-parameter rate-term norm = 0.000e+00
-  - Pivot inertia margin I-m*l^2 = 0.004 kg m^2
-  - Equation identity = PASS
-  - Physical inertia condition = PASS
-  - Constant-parameter limit = PASS
-- **Pass/fail/inconclusive:** **Pass for the three implemented identity/condition checks**, restricted to the illustrative smooth trajectory and parameter set.
-- **Observed anomalies / separate diagnostic:** The force-balance residual is nonzero (2.831e-01). This is distinct from the Euler–Lagrange / explicit-equation identity error and is not itself reported as a pass. Its physical interpretation and acceptance criterion need separate review.
-- **Interpretation:** The equation-identity error is very small, supporting numerical consistency between the independently evaluated Euler–Lagrange expression and the explicit time-varying equations for this trajectory. The positive inertia margin satisfies the implemented physical condition for this parameter set. The parameter-rate terms vanish in the constant-parameter limit, as expected.
+- **Original output (reported by user from the pre-correction script):**
+  - Euler–Lagrange / explicit-equation error = 4.033e-13 (the original unscaled norm mixed N and N*m components; treat as a historical numerical indicator, not a dimensionally homogeneous scalar).
+  - Original generalized-force mismatch norm = 2.831e-01 (dimensionally unsuitable as a single scalar because it mixed N and N*m; do not interpret physically).
+  - Original parameter-rate term norm = 0.00040875 (also combined N and N*m; do not interpret as a single-unit magnitude).
+  - Constant-parameter rate-term norm = 0.000e+00.
+  - Pivot inertia margin I-m*l^2 = 0.004 kg m^2.
+  - Equation identity = PASS; physical inertia condition = PASS; constant-parameter limit = PASS.
+- **Pass/fail/inconclusive:** The three original checks were reported as passed, but V-002's diagnostic presentation is being corrected. Re-execution of the corrected componentwise script is required before closing V-002.
+- **Diagnostic correction:** The previous script applied an ordinary infinity norm to generalized-force vectors whose first component is in N and second component is in N*m. The corrected script reports cart-equation and pendulum-equation identity errors separately, with separate unit-labelled tolerances. It also reports the generalized-force mismatch and parameter-rate contributions componentwise. The generalized-force mismatch is diagnostic only: the prescribed trajectory and independently selected generalized input need not satisfy the forced equations of motion.
+- **Interpretation pending rerun:** The previous very small identity indicator suggests close numerical agreement, but the corrected componentwise outputs are now the acceptance evidence. The positive pivot-inertia margin and constant-parameter-limit result were reported previously; confirm again with the corrected script.
 - **Limitations:** Does not validate open-system mass flow, abrupt payload events or impact/reset dynamics, hardware parameters, actuator dynamics, or closed-loop stability. It does not establish that the illustrative trajectory/parameter variation represents a physical apparatus.
-- **Follow-up action:** Inspect the force-balance residual definition and units before interpreting it; retain the current equation identity result without relabelling the residual as zero. Review the derivation's physical system boundary and time-varying attached-body assumptions before using the equations in controller design.
+- **Follow-up action:** Run the corrected V-002 script and return the complete output. Do not change equations or tolerances to force a pass.
 
 ## Failed / inconclusive tests
 
