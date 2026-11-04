@@ -233,7 +233,7 @@ For cart-position integral augmentation, let
 \[
 \zeta=\begin{bmatrix}X\\\xi\end{bmatrix},\quad
 \dot\xi=-C_xX,\quad
-A_c=\begin{bmatrix}A_0+B_0K_L&-B_0K_i\\-C_x&0\end{bmatrix}
+A_c=\begin{bmatrix}A_0-B_0K_L&-B_0K_i\\-C_x&0\end{bmatrix}
 \]
 when \(u_L=-K_LX-K_i\xi\). Then (V6.23) becomes
 \[
