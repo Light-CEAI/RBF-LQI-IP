@@ -11,7 +11,7 @@ Tests are staged. A later-stage controller test must not be treated as authorise
 | V-003 | Parameter provenance and physical consistency | Exact reference configuration documentation | In progress; parameter set not frozen | [Parameter register](PARAMETER_REGISTER.md) |
 | V-004 | Nominal linear model, stabilisability and integral augmentation conditions | V-003 plus verified nonlinear model | Blocked pending V-003 | To be created |
 | V-005 | LQI augmentation and Riccati solution | V-004 plus specified Q/R and integrated output | Not started | To be created |
-| V-006 | Actual-versus-nominal residual and matched/unmatched projection identity | Consistent residual, actual-input definition and actuator direction | Not started | To be derived and tested |
+| V-006 | Actual-versus-nominal residual and matched/unmatched projection identity | Consistent residual, actual-input definition and actuator direction | **Derivation documented; verification script committed; MATLAB execution pending** | [Derivation](../Analyzed_System/ACTUAL_NOMINAL_RESIDUAL_AND_PROJECTION.md); [script](../Analyzed_System/verification/verify_residual_projection.m); [instructions](../Analyzed_System/verification/README_RESIDUAL_PROJECTION.md) |
 | V-007 | RBF regressor, approximation domain and error evaluation | Defined signals, scales, centres and data coverage | Not started | To be specified |
 | V-008 | Adaptive update law and projection property | Completed Lyapunov derivation | Not started | To be derived |
 | V-009 | Actuator/drive model, force and slew limits, anti-windup | Verified actuator data and selected drive model | Not started | To be specified |
