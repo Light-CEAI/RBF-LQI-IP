@@ -33,7 +33,7 @@ Add a dated entry for each executed test. Preserve failed tests and unexpected r
 | Test ID | Test | Status | Evidence |
 |---|---|---|---|
 | V-001 | Nonlinear equations, inertia positive definiteness and upright finite-difference linearisation | **Passed for illustrative parameter set** | `Analyzed_System/verification/verify_nonlinear_model.m`; user-supplied MATLAB output recorded below |
-| V-002 | Time-varying attached-body Euler–Lagrange identity, inertia condition and constant-parameter limit | **Passed for illustrative smooth trajectory** | `Analyzed_System/verification/verify_time_varying_lagrange_model.m`; user-supplied MATLAB output recorded below |
+| V-002 | Time-varying attached-body Euler–Lagrange identity, inertia condition and constant-parameter limit | **Passed for illustrative smooth trajectory** | `Analyzed_System/verification/verify_time_varying_lagrange_model.m`; user-supplied MATLAB output recorded below |\n| V-006 | Actual-versus-nominal residual and matched/unmatched projection identity | **Passed for algebraic identities on illustrative deterministic grid** | `Analyzed_System/verification/verify_residual_projection.m`; user-supplied MATLAB output recorded below |
 
 ## Accepted results
 
@@ -109,3 +109,25 @@ _None recorded yet._
 - **Interpretation:** The explicit time-varying equations agree with the independently evaluated Euler–Lagrange expressions to substantially tighter precision than the componentwise tolerances. The physical pivot-inertia margin is positive, and parameter-rate contributions vanish in the constant-parameter limit. The nonzero generalized-force mismatch is expected to be reported separately because the selected trajectory/input is not required to satisfy the forced equations of motion; it does not invalidate the identity check.
 - **Limitations:** This is an equation-consistency verification for an illustrative prescribed smooth attached-body trajectory. It does not validate open-system mass flow, abrupt payload events/impact resets, hardware parameters, actuator dynamics, or closed-loop stability.
 - **Follow-up action:** V-002 is closed for its stated scope. Continue with parameter provenance and the rigorous actual-versus-nominal residual and matched/unmatched projection derivation.
+
+### V-006 — Actual-versus-nominal residual and weighted projection verification (accepted)
+
+- **Execution date/time:** Reported by user on 2026-11-04; exact time and MATLAB release not supplied.
+- **Research branch and commit:** `analyzed-system`; corrected MATLAB syntax fix commit `13f63088e08ecc6a4a5ea93fa0036fe00f8a17cd`.
+- **Script and version:** `Analyzed_System/verification/verify_residual_projection.m`.
+- **MATLAB release/environment:** Not supplied.
+- **Parameter-set ID and source:** Illustrative parameters and deterministic five-sample grid embedded in the script; not hardware-derived or frozen.
+- **Purpose / hypothesis:** Verify positive inertia determinant, positive weighted projection denominator, exact residual reconstruction, weighted projection orthogonality, actual-versus-nominal dynamic identity, and independence of the pivot-torque direction from the horizontal-force direction.
+- **Actual output (user-supplied):**
+  - Samples checked: 5.
+  - Minimum det(H): \(7.875402667886\\times10^{-3}\).
+  - Minimum \(b_q^T S b_q\): \(2.400790322287\\times10^{3}\).
+  - Maximum residual reconstruction error: 0.
+  - Maximum weighted orthogonality error: \(2.241609675657\\times10^{-14}\).
+  - Maximum actual-nominal identity error: \(1.776356839400\\times10^{-15}\).
+  - Maximum torque-direction determinant error: \(2.842170943040\\times10^{-14}\).
+  - All five checks reported PASS: physical inertia determinant, residual reconstruction, projection orthogonality, actual-nominal identity and torque direction independence.
+- **Pass/fail/inconclusive:** **PASS**, for the implemented algebraic identities and checks on the illustrative deterministic grid.
+- **Interpretation:** Within the tested samples, the inertia determinant and projection denominator were positive; the residual decomposed exactly into matched and unmatched components to numerical precision; the unmatched component was weighted-orthogonal to the actuator direction; the actual-versus-nominal dynamics identity held to floating-point precision; and the pivot torque direction was linearly independent of the horizontal-force direction. This supports the algebraic consistency of the documented residual/projection construction for the tested samples.
+- **Limitations:** Five illustrative samples do not establish conditioning over a final admissible operating region or physical parameter set. The projection scales are provisional. This test does not validate parameter provenance, physical representativeness, RBF approximation or adaptation, actuator dynamics/constraints, closed-loop performance, forward invariance or stability/UUB.
+- **Follow-up action:** Retain V-006 as passed for its narrow algebraic scope. Next justify projection scales and conditioning over the declared operating region, establish availability/estimation bounds for the actual input direction and residual regressors, then derive the adaptive law and actuator-inclusive stability analysis. Do not proceed to final controller implementation.
