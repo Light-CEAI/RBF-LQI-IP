@@ -11,7 +11,7 @@ Tests are staged. A later-stage controller test must not be treated as authorise
 | V-003 | Parameter provenance and physical consistency | Exact reference configuration documentation | In progress; parameter set not frozen | [Parameter register](PARAMETER_REGISTER.md) |
 | V-004 | Nominal linear model, stabilisability and integral augmentation conditions | V-003 plus verified nonlinear model | Blocked pending V-003 | To be created |
 | V-005 | LQI augmentation and Riccati solution | V-004 plus specified Q/R and integrated output | Not started | To be created |
-| V-006 | Actual-versus-nominal residual and matched/unmatched projection identity | Consistent residual, actual-input definition and actuator direction | **Derivation documented; verification script committed; MATLAB execution pending** | [Derivation](../Analyzed_System/ACTUAL_NOMINAL_RESIDUAL_AND_PROJECTION.md); [script](../Analyzed_System/verification/verify_residual_projection.m); [instructions](../Analyzed_System/verification/README_RESIDUAL_PROJECTION.md) |
+| V-006 | Actual-versus-nominal residual and matched/unmatched projection identity | Consistent residual, actual-input definition and actuator direction | **Passed for algebraic identities on the illustrative deterministic grid; closed for stated scope** | [Derivation](../Analyzed_System/ACTUAL_NOMINAL_RESIDUAL_AND_PROJECTION.md); [script](../Analyzed_System/verification/verify_residual_projection.m); [instructions](../Analyzed_System/verification/README_RESIDUAL_PROJECTION.md) |
 | V-007 | RBF regressor, approximation domain and error evaluation | Defined signals, scales, centres and data coverage | Not started | To be specified |
 | V-008 | Adaptive update law and projection property | Completed Lyapunov derivation | Not started | To be derived |
 | V-009 | Actuator/drive model, force and slew limits, anti-windup | Verified actuator data and selected drive model | Not started | To be specified |
@@ -53,3 +53,9 @@ The corrected componentwise MATLAB script was executed by the user. Both Euler�
 The generalized-force mismatch was (-0.2831167\) N and (-0.06485389\) N·m. These are explicitly diagnostic only and do not enter the identity-test pass/fail decision.
 
 **Status: PASSED and closed for the stated illustrative smooth attached-body model and test domain.** This does not validate open-system mass flow, abrupt payload events, hardware parameters, actuator dynamics, or closed-loop stability. See the detailed user-supplied output in [RESULTS_LOG.md](RESULTS_LOG.md).
+
+## V-006 closure — 2026-11-04
+
+The user executed the corrected `verify_residual_projection.m` script and supplied the complete console output. Five deterministic state/parameter samples were checked. Minimum inertia determinant was \(7.875402667886\\times10^{-3}\); minimum weighted projection denominator was \(2.400790322287\\times10^{3}\). Maximum residual reconstruction error was zero; maximum weighted orthogonality error was \(2.241609675657\\times10^{-14}\); maximum actual-versus-nominal identity error was \(1.776356839400\\times10^{-15}\); and maximum torque-direction determinant identity error was \(2.842170943040\\times10^{-14}\). All five flags reported PASS: physical inertia, residual reconstruction, projection orthogonality, actual-nominal identity and torque-direction independence.
+
+**Status: PASSED and closed for the implemented algebraic identities on the illustrative deterministic grid only.** This does not validate parameter provenance, physical representativeness, projection-scale suitability over a final operating envelope, RBF approximation, actuator behaviour, closed-loop performance or stability. See RESULTS_LOG.md.
