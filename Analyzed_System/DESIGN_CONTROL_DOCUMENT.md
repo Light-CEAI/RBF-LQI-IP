@@ -160,9 +160,9 @@ Report at least cart-position error/travel, pendulum angle and angular rate, set
 ## 10. Current evidence and unresolved work (2026-11-04)
 
 - **V-001:** User-reported MATLAB checks passed for the illustrative constant-parameter set: inertia positive definiteness over the tested angle interval and finite-difference agreement of upright (A,B,E) Jacobians. This does not validate physical parameters, actuator behaviour or closed-loop stability.
-- **V-002:** User-reported checks support the Euler–Lagrange/explicit-equation identity, physical pivot-inertia margin and constant-parameter limit for an illustrative smooth attached-body trajectory. The reported scalar force-balance mismatch combined force and torque coordinates with incompatible units; it is not a valid single-unit error measure. The prescribed trajectory was not necessarily a solution under the separately selected generalized input. Correct the script to report componentwise force and torque residuals and label the diagnostic as a generalized-force mismatch. Do not use the mixed-unit scalar as an acceptance result.
+- **V-002:** Corrected componentwise MATLAB rerun passed and is closed for the illustrative smooth attached-body trajectory. Cart and pendulum identity errors passed separate unit-labelled tolerances; pivot inertia margin was positive; constant-parameter rate terms were zero. The generalized-force mismatch is retained as a componentwise diagnostic only. See RESULTS_LOG.md.
 - **Parameter register:** not frozen; physical values and actuator data require exact source/configuration and uncertainty.
-- **Residual projection, RBF adaptation, actuator model, complete stability proof and controller simulations:** open; no final controller implementation is approved.
+- **V-006 residual/projection:** Exact actual-versus-nominal identity and weighted matched/unmatched projection are documented in ACTUAL_NOMINAL_RESIDUAL_AND_PROJECTION.md; MATLAB verification is pending. **RBF adaptation, actuator model, complete stability proof and controller simulations:** open; no final controller implementation is approved.
 
 ## 11. Controlled repository references
 
