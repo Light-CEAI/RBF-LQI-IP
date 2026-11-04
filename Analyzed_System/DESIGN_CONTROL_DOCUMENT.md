@@ -187,3 +187,10 @@ At the end of each substantive research session:
 6. Commit related changes with descriptive messages; record the resulting commit(s) here or in the activity log.
 
 This document is a design-control reference, not a substitute for the full derivations, literature sources, test outputs or stability proof.
+
+
+### Projection/signal-availability gate update (2026-11-04)
+
+A companion specification, [Projection metric and online signal availability](PROJECTION_SCALING_AND_SIGNAL_AVAILABILITY.md), now formalises the dimensional requirements for the weighted metric, the procedure for selecting its scales from a declared operating envelope, and the distinction between the true analysis input direction and an implementable estimated direction. It also audits the online availability of state, nominal request, applied force, varying parameters/rates, disturbances and acceleration targets.
+
+**Decision:** No numerical projection scales or continuous-domain lower bound are approved because the parameter register and operating envelope remain unfrozen. The earlier 0.08 m/s² and 0.10 rad/s² values remain provisional examples only. The RBF regressor cannot silently use true simulation parameters or rates. Two possible routes are retained for review: parameter-informed approximation using bounded online estimates, or state/input-only approximation with a defensible robust bound for hidden parameter variation. Neither route is selected yet. The controller implementation gate remains closed.
