@@ -67,3 +67,13 @@ Record significant research work chronologically. Keep entries concise but trace
 - **Decision:** Do not freeze numerical scales or claim a lower bound from the current five-sample V-006 grid. Existing 0.08 m/s² and 0.10 rad/s² values remain provisional examples. Do not feed true, unmeasured simulation parameters/rates into an online RBF regressor. No adaptation law or controller code is approved yet.
 - **Open issues:** Freeze parameter/state/disturbance/force envelopes; specify sensors, state estimation and applied-force reconstruction; decide between parameter-informed and robust state/input-only RBF routes; establish a continuous-domain projection conditioning bound.
 - **Next action:** Resolve parameter provenance and admissible operating/sensing assumptions. Then freeze projection scales and regressor inputs, derive the online adaptation law and its Lyapunov contribution, and proceed to actuator-inclusive analysis.
+
+
+## 2026-11-05 — Prepare MATLAB projection-metric envelope audit (V-011)
+
+- **Objective:** Provide a reproducible MATLAB procedure to evaluate inertia positivity and weighted-projection conditioning once physically justified parameter and operating ranges are entered.
+- **Work completed:** Added a parameter-grid audit function, an intentionally unpopulated configuration template, and run/interpretation instructions. The function derives pivot inertia using the parallel-axis theorem, evaluates the inertia determinant and weighted projection denominator over the Cartesian product of supplied ranges, and reports a predeclared sensitivity sweep of the angular-to-cart acceleration scale ratio.
+- **Evidence / files:** [Audit function](../Analyzed_System/verification/audit_projection_metric_envelope.m); [configuration template](../Analyzed_System/verification/projection_metric_config_TEMPLATE.m); [README](../Analyzed_System/verification/README_PROJECTION_METRIC_AUDIT.md); [parameter register](PARAMETER_REGISTER.md).
+- **Decision:** No physical values or acceleration scales are embedded. The script is a finite-grid diagnostic, not a continuous-domain proof of \(\beta_b\). V-011 is not passed until the user supplies justified ranges, executes the function in MATLAB and returns the complete output.
+- **Open issues:** Parameter ranges, admissible angle domain and metric scales remain unapproved. Grid coverage and endpoint inclusion must be reviewed; a formal continuous lower bound still needs an analytic or validated enclosure argument.
+- **Next action:** Populate the template only from the approved parameter/operating-envelope register, execute V-011, and review the output before selecting an RBF regressor or deriving its update law.
